@@ -6,7 +6,7 @@ A collection of custom skills for [Claude Code](https://claude.ai/code) — the 
 
 | Skill | Description | Install |
 |-------|-------------|---------|
-| [concise-mode](skills/concise-mode/SKILL.md) | Cuts response verbosity ~75% by eliminating filler while keeping full technical accuracy | [Download](concise-mode.skill) |
+| [concise-mode](skills/concise-mode/SKILL.md) | Reduces token usage ~75% by stripping filler — narration, preambles, closings — without touching reasoning, tool use, or code | [Download](concise-mode.skill) |
 | [project-knowledge](skills/project-knowledge/SKILL.md) | Maintains a living `PROJECT_KNOWLEDGE.md` file — auto-scans your codebase, tracks changes, and keeps AI sessions context-aware across conversations | [Download](project-knowledge.skill) |
 
 ## Installation
@@ -40,7 +40,7 @@ update project knowledge
 ## Skills Overview
 
 ### `concise-mode`
-Toggles a low-verbosity mode for the entire conversation. Claude stops adding preambles, closings, and narration between tool calls. Stays active until you say `verbose mode`.
+Reduces token usage ~75% by stripping verbal filler from Claude's responses — without changing how Claude reasons, uses tools, or handles code. Cuts narration, preambles, and closings. The answers stay identical; you just stop paying for the wrapper around them.
 
 **Trigger:** say `concise mode`  
 **Deactivate:** say `verbose mode` or `deactivate concise`
