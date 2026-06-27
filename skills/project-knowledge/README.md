@@ -1,47 +1,62 @@
 # project-knowledge
 
-A Claude Code skill that maintains a living `PROJECT_KNOWLEDGE.md` file at your project root. Auto-scans your codebase on first run, tracks changes each session, and keeps AI context accurate across conversations.
+Keeps a `.project-knowledge/` folder at your project root — one focused file per concern, a master index for navigation. Replaces a single `PROJECT_KNOWLEDGE.md` that grows into an unmanageable wall of text.
 
-## What it does
+## Why a folder instead of one file
 
-**On first run (CREATE mode):**
-- Scans file tree, detects stack, frameworks, and entry points
-- Greps for systems: auth, DB, email, payments, storage, queues, realtime, AI
-- Inventories every server action / API route, hook / service, and component
-- Extracts all environment variables and dev commands
-- Asks only what it couldn't infer, then writes the full file
+A single file works until it doesn't. Real projects hit 700+ lines fast — schema, routes, hooks, components, features, session history all in one place. An AI loading the whole thing on every task wastes tokens and context. With a folder, each file is loaded only when relevant. The `INDEX.md` tells the AI exactly which files to open for a given task.
 
-**Each subsequent session (UPDATE mode):**
-- Detects changed files since last update
-- Infers likely changes from file names and git log
-- Appends a session log entry with date and summary
-- Never deletes history — marks deprecated items with strikethrough
+## What's in the folder
 
-**New session orientation (READ mode):**
-- Reads the file and gives a <150-word briefing
-- Covers: what the project is, stack, what's built, last session, next step
+```
+.project-knowledge/
+├── INDEX.md          ← project summary + context-loading guide (what to read for each task)
+├── stack.md          ← tech stack, dev commands, env vars
+├── structure.md      ← file tree, entry points, key files
+├── schema.md         ← DB / localStorage / storage schema
+├── routes.md         ← server actions, API routes
+├── hooks.md          ← custom hooks, composables, service functions
+├── components.md     ← component inventory grouped by folder
+├── systems.md        ← auth, email, payments, queues, AI, realtime
+├── features.md       ← user-facing features and multi-step workflows
+├── integrations.md   ← external systems and data contracts
+├── roadmap.md        ← known bugs, active TODOs, planned features, current goal
+├── history.md        ← removed items, past fixes, decisions (append-only)
+└── sessions.md       ← session-by-session log (append-only)
+```
+
+Only files with real content are created. `INDEX.md` lists only what exists.
+
+## Three modes
+
+**No folder yet → CREATE**
+Auto-scans your codebase (file tree, stack, routes, hooks, components, env vars, systems), asks only what scanning can't answer (purpose, what's working, known bugs, current goal), then generates all relevant files.
+
+**Fresh session, folder exists → ORIENT**
+Reads `INDEX.md`, uses the context-loading guide to pick which files are relevant to your current task, loads only those, gives a <150-word briefing. Asks what you're working on if you haven't said.
+
+**Mid-session, folder exists → UPDATE**
+Detects what changed (from conversation context + git diff + recently modified files), maps changes to the right files, updates only those, appends one entry to `sessions.md`. Never touches files that weren't affected.
+
+## roadmap.md vs history.md
+
+These are kept separate on purpose:
+
+- **roadmap.md** — forward-looking: known bugs, active TODOs, planned features, current goal. Load this before starting any task to know what's in flight.
+- **history.md** — past-only: removed items, fixed bugs, architectural decisions. Append-only.
+
+When a bug gets fixed: remove it from `roadmap.md`, add it to `history.md`.
 
 ## Usage
 
-Trigger phrases:
 ```
-update project docs
-log what we did
-sync project knowledge
-start a new session
-what have we done so far
+start a new session       → ORIENT mode
+update project docs       → UPDATE mode
+log what we did           → UPDATE mode
+sync project knowledge    → UPDATE mode
+what have we done so far  → UPDATE mode
+we're done                → offer to UPDATE before closing
 ```
-
-Also triggers automatically at session end when you say `we're done` or `that's it for now`.
-
-## Output
-
-Creates/updates `PROJECT_KNOWLEDGE.md` at your project root with sections:
-- Tech Stack, Project Structure, Database Schema
-- Server Actions / API Routes, Hooks & Services, Component Inventory
-- Environment Variables, Dev Commands
-- External Integrations, Systems, Features, Workflows
-- Removed, Fixed, Known Issues, Decisions, Session Log
 
 ## Install
 
