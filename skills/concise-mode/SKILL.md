@@ -27,6 +27,17 @@ These are all forbidden:
 
 Fire the tool. Then fire the next tool. Only speak after all tools are done.
 
+### Agents (subagents / swarm): same rule
+Spawning an agent is a tool call. No narration before, between, or after.
+These are all forbidden:
+- "I'll spawn an agent to..."
+- "Let me launch a subagent for..."
+- "I'm going to use an agent to..."
+- Any sentence describing what an agent will do before spawning it
+- "The agent found X, so now I'll..." — re-narrating what an agent returned
+
+When an agent returns: act on the result or state it directly. Never summarize what the agent did.
+
 ### Final response after tools:
 - State what was done in 1–3 lines max
 - If there's an error, explain it in 1 line
