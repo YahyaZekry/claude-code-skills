@@ -45,14 +45,63 @@ Not every file is created for every project — only files with real content are
 ## Step 1 — Detect Mode
 
 ```bash
-ls .project-knowledge/INDEX.md 2>/dev/null && echo "EXISTS" || echo "NOT_FOUND"
+ls .project-knowledge/INDEX.md 2>/dev/null && echo "FOLDER_EXISTS" || echo "NO_FOLDER"
+ls PROJECT_KNOWLEDGE.md 2>/dev/null && echo "OLD_FILE_EXISTS" || echo "NO_OLD_FILE"
 ```
 
 | Result | Mode |
 |--------|------|
-| `NOT_FOUND` | **CREATE** — no knowledge folder yet |
-| `EXISTS` + fresh session (no prior conversation context) | **ORIENT** — load and brief |
-| `EXISTS` + mid-session (work has happened this conversation) | **UPDATE** — detect changes and write |
+| No folder + old `PROJECT_KNOWLEDGE.md` found | **MIGRATE** — split old file into new structure |
+| No folder + no old file | **CREATE** — scan project, generate all files |
+| Folder exists + fresh session (no prior conversation context) | **ORIENT** — load and brief |
+| Folder exists + mid-session (work has happened this conversation) | **UPDATE** — detect changes and write |
+
+---
+
+## Mode M — MIGRATE
+
+Old `PROJECT_KNOWLEDGE.md` exists, but no `.project-knowledge/` folder yet.
+Read the old file and redistribute its content into the new structure — don't re-scan the codebase.
+
+### Phase 1: Read the Old File
+
+Read `PROJECT_KNOWLEDGE.md` in full.
+
+### Phase 2: Map Sections to Files
+
+The old file used a fixed set of sections. Map each to its new home:
+
+| Old section | New file |
+|-------------|----------|
+| `## What This Project Does` | `INDEX.md` (What This Project Does) |
+| `## Tech Stack` | `stack.md` |
+| `## Project Structure` | `structure.md` |
+| `## Database Schema` | `schema.md` *(only if non-empty)* |
+| `## Server Actions / API Routes` | `routes.md` *(only if non-empty)* |
+| `## Hooks & Services` | `hooks.md` *(only if non-empty)* |
+| `## Component Inventory` | `components.md` *(only if non-empty)* |
+| `## Environment Variables` | `stack.md` (append after Dev Commands) |
+| `## Dev Commands` | `stack.md` |
+| `## External Integrations & Data Contracts` | `integrations.md` *(only if non-empty)* |
+| `## Systems` | `systems.md` |
+| `## Features` + `## Workflows` | `features.md` |
+| `## Known Issues / TODOs` | `roadmap.md` (Active TODOs / Known Bugs) |
+| `## Removed` + `## Fixed` + `## Decisions & Notes` | `history.md` |
+| `## Session Log` | `sessions.md` |
+
+Sections that say "None", "N/A", or are otherwise empty → skip, don't create the file.
+
+### Phase 3: Write the New Files
+
+Create `.project-knowledge/` and write each file with its migrated content.
+Write `INDEX.md` last, listing only the files actually created.
+
+### Phase 4: Handle the Old File
+
+Tell the user:
+> "Migration complete. `.project-knowledge/` is ready. You can delete `PROJECT_KNOWLEDGE.md` — all its content has been moved. Want me to delete it now?"
+
+Do NOT delete it automatically — let the user confirm.
 
 ---
 
