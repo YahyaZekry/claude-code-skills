@@ -27,9 +27,12 @@ A single file works until it doesn't. Real projects hit 700+ lines fast — sche
 
 Only files with real content are created. `INDEX.md` lists only what exists.
 
-## Three modes
+## Four modes
 
-**No folder yet → CREATE**
+**Old `PROJECT_KNOWLEDGE.md` found, no folder yet → MIGRATE**
+Reads the old single file, maps each section to its new home (`## Hooks & Services` → `hooks.md`, `## Known Issues` → `roadmap.md`, etc.), creates the folder, skips empty sections. Asks you to confirm before deleting the old file.
+
+**No folder, no old file → CREATE**
 Auto-scans your codebase (file tree, stack, routes, hooks, components, env vars, systems), asks only what scanning can't answer (purpose, what's working, known bugs, current goal), then generates all relevant files.
 
 **Fresh session, folder exists → ORIENT**
