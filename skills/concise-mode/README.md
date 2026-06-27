@@ -7,7 +7,9 @@ Reduces token usage ~75% by stripping verbal filler from Claude's responses — 
 Every Claude Code session burns tokens on text that adds no value:
 
 - *"Now let me check that file..."* — before a Read tool call
-- *"I'll go ahead and fix that now..."* — before an Edit tool call  
+- *"I'll go ahead and fix that now..."* — before an Edit tool call
+- *"I'll spawn an agent to explore this..."* — before launching a subagent
+- *"The agent found X, so now I'll..."* — re-narrating what a subagent returned
 - *"Sure! Great question! Let me help you with that."* — before every answer
 - *"Let me know if you need anything else!"* — after every answer
 
@@ -17,6 +19,7 @@ None of that affects correctness. It's just output tokens you're paying for and 
 
 **Cuts:**
 - Narration before/between/after tool calls
+- Narration before/after spawning subagents — and re-narrating what they returned
 - Preambles and closing pleasantries
 - Restating the question before answering
 - End-of-response summaries
