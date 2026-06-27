@@ -53,6 +53,7 @@ When a bug gets fixed: remove it from `roadmap.md`, add it to `history.md`.
 ## Usage
 
 ```
+project knowledge         → auto-detects the right mode
 start a new session       → ORIENT mode
 update project docs       → UPDATE mode
 log what we did           → UPDATE mode

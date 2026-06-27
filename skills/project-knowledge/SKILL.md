@@ -2,10 +2,8 @@
 name: project-knowledge
 description: >
   Maintains a living .project-knowledge/ folder for any coding project.
-  Use this skill whenever the user asks to "update project docs", "log what we did",
-  "sync project knowledge", "start a new session", "what have we done so far",
-  "catch me up", or any time the user wants to record progress, changes, fixes,
-  removals, or decisions made during a coding session.
+  Trigger when the user says "project knowledge", "update project docs", "log what we did",
+  "sync project knowledge", "start a new session", "what have we done so far", or "catch me up".
   Also trigger at the END of any session if the user says "we're done" or "that's it for now"
   — proactively offer to update before closing.
 ---
