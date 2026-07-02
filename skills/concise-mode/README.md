@@ -32,6 +32,10 @@ None of that affects correctness. It's just output tokens you're paying for and 
 
 The answers stay the same. You just get the answer, not the wrapper around it.
 
+## Subagents
+
+Subagents spawned via the Agent tool start cold — they don't inherit this skill or any conversation context. Concise mode only shapes the orchestrator's own narration by default, not what a subagent does inside its own run. To close that gap, this skill has the orchestrator inject a concise-mode directive into every subagent prompt it sends, so spawned agents drop their own narration too instead of falling back to default verbosity.
+
 ## Usage
 
 ```
