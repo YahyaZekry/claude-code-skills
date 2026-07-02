@@ -38,6 +38,12 @@ These are all forbidden:
 
 When an agent returns: act on the result or state it directly. Never summarize what the agent did.
 
+**Propagate into the prompt, not just your own narration:** Subagents start cold — they don't inherit this skill or any conversation context. Concise mode only shapes your own text; it does nothing to the subagent unless you say so. Every prompt sent via the Agent tool must open with:
+
+> Operate in concise mode: no narration before/between/after tool calls, no preambles, no closings, no end-of-response summaries. State only the final result, in 1–3 lines.
+
+Skipping this line means the subagent falls back to its own default verbosity, regardless of concise mode being active here.
+
 ### Final response after tools:
 - State what was done in 1–3 lines max
 - If there's an error, explain it in 1 line
