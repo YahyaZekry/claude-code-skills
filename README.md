@@ -2,6 +2,8 @@
 
 A collection of custom skills for [Claude Code](https://claude.ai/code) — the AI coding CLI by Anthropic.
 
+General-purpose skills only. For Obsidian-specific skills (research, note-linking, vault health checks), see the sibling repo: [claude-code-obsidian-skills](https://github.com/YahyaZekry/claude-code-obsidian-skills).
+
 ## Available Skills
 
 | Skill | Description | Install |
